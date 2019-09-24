@@ -71,6 +71,26 @@ defmodule App do
     end
   end
 
+  defp get_file_size(chunks, size) do
+    if chunks != [] do
+      [head | tail] = chunks
+      new_size = count_chunk(head, size)
+
+      get_file_size(tail, new_size)
+    else
+      size
+    end
+  end
+
+  defp count_chunk(chunk, size) do
+    {:ok, bytes} =
+      String.trim(chunk, ":")
+      |> Base.decode64(padding: false)
+
+    # IO.puts(byte_size(bytes))
+    size + byte_size(bytes)
+  end
+
   defp inspect_chunk(chunk) do
     {:ok, bytes} =
       String.trim(chunk, ":")
