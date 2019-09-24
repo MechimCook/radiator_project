@@ -21,6 +21,29 @@ defmodule App do
   @url "http://localhost:3000"
   @error_fault 10
 
+  def run(file_name) do
+    #
+    case parse_update(file_name) do
+      {:ok, chunks} ->
+        old_size =
+          get_sum()
+          |> String.to_integer(16)
+
+        expected_size = rem(length(chunks) * 2 + old_size, 256)
+
+        send_update(chunks, 0)
+
+        if String.to_integer(get_sum(), 16) == expected_size - 2 do
+          "Update Succsessful"
+        else
+          "Update Unsuccsessful please try again"
+        end
+
+      {:error, error} ->
+        error <> "Can not read file."
+    end
+  end
+
   defp parse_update(file_name) do
     case File.read("../" <> file_name) do
       {:ok, chunks} ->
