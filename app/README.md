@@ -4,7 +4,12 @@
 
  where `file_name` is the name of a file in the same directory as the app
 
+# problems
+  was not able to get the correct number of bytes from the files so the math for the CHECKSUM is wrong
 
+# optomizations
+   • when reformatting the file you could set each chunk as 20 except for the last remainder.
+   • use web sockets to limit the requests and keep the device up to date without the device needing to request updated changes
 
 
 # Questions and Answers
