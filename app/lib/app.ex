@@ -82,4 +82,35 @@ defmodule App do
       {:ok}
     end
   end
+
+  defp send_update(chunks, counter) do
+    if chunks != [] do
+      [head | tail] = chunks
+      {:ok, response} = HTTPoison.post(@url, "CHUNK: " <> head, [], [])
+
+      case response.body do
+        "ERROR PROCESSING CONTENTS\n" ->
+          if counter < @error_fault do
+            send_update(chunks, counter + 1)
+          else
+            {:error, "ERROR PROCESSING CONTENTS\n"}
+          end
+
+        "OK\n" ->
+          send_update(tail, 0)
+
+        _ ->
+          {:error, "ERROR PROCESSING CONTENTS\n"}
+          "Error in connecting to server"
+      end
+    else
+      get_sum()
+    end
+  end
+
+  defp get_sum() do
+    {:ok, response} = HTTPoison.post(@url, "CHECKSUM", [], [])
+    [_, sum] = String.split(response.body)
+    String.slice(sum, 2..10)
+  end
 end
