@@ -1,21 +1,17 @@
 # App
 
-**TODO: Add description**
 
-## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `app` to your list of dependencies in `mix.exs`:
 
-```elixir
-def deps do
-  [
-    {:app, "~> 0.1.0"}
-  ]
-end
-```
+# Questions and Answers
+• Describe how you would accomplish updating 100+ devices with the same firmware.
+  • If I was given a list of the devices addresses I would stream the file running all same steps for just 1 device asynchronously and report any failures to an error reporting serves like sentry and output the fails to a file to follow up on.  
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/app](https://hexdocs.pm/app).
+• Imagine the devices respond to messages over a different channel than an HTTP response. For example, imagine the server responds to every valid message to a device with 200, and the device’s actual response arrives asynchronously over a websocket. What architecture would you use?
+  • I would use Phoenix sockets as it does a lot for you and it should allow for better communication between the device and server
 
+• In addition to updating the firmware for 100+ devices, imagine each device takes ∼30 seconds to respond to each message. Would this change anything?
+ •Yes if the devices took ∼30 seconds to respond to each message I would optimize for each chunk to be 20 bytes as much as possible.
+
+• Imagine that in addition to performing firmware updates to devices over a REST endpoint, you also need to communicate with devices over other protocols like MQTT, CoAP, or a custom protocol over TCP. How could your design accommodate this?
+  • I would switch HTTPoison with a MQTT or CoAP Client and accommodate for whatever requests the device accepts 
