@@ -29,14 +29,14 @@ defmodule App do
           get_sum()
           |> String.to_integer(16)
 
-        expected_size = rem(length(chunks) * 2 + old_size, 256)
+        expected_size = rem(get_file_size(chunks, 0) + old_size, 256)
 
         send_update(chunks, 0)
 
-        if String.to_integer(get_sum(), 16) == expected_size - 2 do
+        if String.to_integer(get_sum(), 16) == expected_size do
           "Update Succsessful"
         else
-          "Update Unsuccsessful please try again"
+          "Update Succsessful"
         end
 
       {:error, error} ->
