@@ -1,4 +1,8 @@
-# App
+# Instructions
+ run `iex -S mix` from withen the app dirrectory
+ then `App.run(file_name)`
+
+ where `file_name` is the name of a file in the same directory as the app
 
 
 
@@ -14,4 +18,4 @@
  •Yes if the devices took ∼30 seconds to respond to each message I would optimize for each chunk to be 20 bytes as much as possible.
 
 • Imagine that in addition to performing firmware updates to devices over a REST endpoint, you also need to communicate with devices over other protocols like MQTT, CoAP, or a custom protocol over TCP. How could your design accommodate this?
-  • I would switch HTTPoison with a MQTT or CoAP Client and accommodate for whatever requests the device accepts 
+  • I would switch HTTPoison with a MQTT or CoAP Client and accommodate for whatever requests the device accepts
